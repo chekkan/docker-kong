@@ -42,12 +42,9 @@ nginx-lb:
 # Kong Database
 
 kong-database:
-  image: postgres:9.4
+  image: casandra:3
   ports:
-    - 5432
-  environment:
-    - POSTGRES_USER=kong
-    - POSTGRES_DB=kong
+    - 9042
 
 # Kong
 
@@ -65,6 +62,7 @@ kong:
     - 7946
     - 7946/udp
   environment:
-    - KONG_DATABASE=postgres
+    - KONG_DATABASE=cassandra
+    - KONG_CASSANDRA_CONTACT_POINTS=kong-database
     - KONG_PG_HOST=kong-database
   
